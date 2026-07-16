@@ -1,0 +1,459 @@
+/* ---------------------------------------------------------------------------
+   Golden Grains — design tokens & base
+   A trade-house / export-grading aesthetic: forest-green, brass gold, warm
+   paper. Palette pulled from the physical GoldenGrains pouch (deep green,
+   gold botanical line-art, kraft cream). Everything reads like a document
+   from a serious mill — lot numbers, mono metadata, hairline gold rules,
+   stamped seals.
+--------------------------------------------------------------------------- */
+
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* shadcn/ui token bridge: map the brand palette onto shadcn's semantic vars */
+@theme inline {
+  --color-background: var(--husk);
+  --color-foreground: var(--ink-soft);
+  --color-card: var(--paper);
+  --color-card-foreground: var(--ink);
+  --color-primary: var(--gold);
+  --color-primary-foreground: var(--ink);
+  --color-secondary: var(--pine);
+  --color-secondary-foreground: var(--husk);
+  --color-muted: var(--line);
+  --color-muted-foreground: var(--ink-soft);
+  --color-border: var(--line);
+  --color-ring: var(--gold-deep);
+  --font-sans: var(--font-body);
+  --radius-lg: var(--radius-l);
+  --radius-md: var(--radius-m);
+  --radius-sm: var(--radius-s);
+}
+
+:root {
+  /* Greens — deep forest through to mid pine */
+  --ink: #132219;
+  --ink-raise: #1a2e22;
+  --ink-soft: #2b3a2f;
+  --pine: #2f5138;
+  --pine-bright: #3b6446;
+
+  /* Brass gold — the metallic accent from the pouch lettering */
+  --gold: #c39738;
+  --gold-bright: #d7ab48;
+  --gold-deep: #866719;
+  --gold-soft: #e7d5a4;
+  --gold-line: rgba(195, 151, 56, 0.34);
+  --gold-wash: rgba(195, 151, 56, 0.08);
+
+  /* Warm papers & kraft */
+  --husk: #f3efe3;
+  --paper: #fdfcf7;
+  --kraft: #ece4d1;
+  --line: #ded7c4;
+  --line-2: #e8e2d2;
+  --line-dark: rgba(231, 213, 164, 0.2);
+  --white: #ffffff;
+
+  --font-display: 'Bricolage Grotesque', 'Archivo', system-ui, sans-serif;
+  --font-body: 'Archivo', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+
+  --radius-s: 10px;
+  --radius-m: 14px;
+  --radius-l: 20px;
+
+  /* Layered, warm-tinted shadows — depth without heaviness */
+  --shadow-xs: 0 1px 2px rgba(19, 34, 25, 0.06);
+  --shadow-sm: 0 2px 10px -4px rgba(19, 34, 25, 0.14);
+  --shadow-pop: 0 18px 44px -22px rgba(19, 34, 25, 0.34), 0 4px 14px -8px rgba(19, 34, 25, 0.16);
+  --shadow-float: 0 34px 74px -26px rgba(19, 34, 25, 0.46), 0 10px 24px -12px rgba(19, 34, 25, 0.24);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  background: var(--husk);
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Faint paper grain over the whole page — adds material warmth, stays out of
+   the way of text. Fixed so it doesn't scroll like wallpaper. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.55rem, 5.8vw, 4.55rem);
+  font-weight: 800;
+  line-height: 0.99;
+  letter-spacing: -0.028em;
+}
+
+h2 {
+  font-size: clamp(1.95rem, 3.6vw, 2.85rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-deep);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--gold-soft);
+  color: var(--ink);
+}
+
+/* Layout primitives ------------------------------------------------------- */
+
+.wrap {
+  position: relative;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 48px);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(76px, 9vw, 124px);
+  scroll-margin-top: 84px;
+}
+
+.section-tint {
+  background:
+    radial-gradient(120% 100% at 100% 0%, var(--gold-wash), transparent 55%),
+    linear-gradient(180deg, rgba(47, 81, 56, 0.05), rgba(47, 81, 56, 0.012));
+  border-block: 1px solid var(--line);
+}
+
+.section-dark {
+  background: var(--ink);
+  color: rgba(236, 231, 214, 0.78);
+}
+
+.section-dark h2,
+.section-dark h3 {
+  color: #ece7d6;
+}
+
+/* Type accents ------------------------------------------------------------ */
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0 0 18px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+  flex: none;
+}
+
+.section-dark .eyebrow {
+  color: var(--gold-soft);
+}
+
+.section-dark .eyebrow::before {
+  background: linear-gradient(90deg, transparent, var(--gold-soft));
+}
+
+.section-heading {
+  max-width: 640px;
+}
+
+.section-heading.is-centered {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-heading.is-centered .eyebrow {
+  justify-content: center;
+}
+
+.section-lede {
+  margin-top: 18px;
+  font-size: 1.06rem;
+  color: var(--ink-soft);
+}
+
+.section-dark .section-lede {
+  color: rgba(236, 231, 214, 0.72);
+}
+
+/* Buttons ------------------------------------------------------------------ */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s var(--ease-out),
+    box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-gold {
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  color: var(--ink);
+  box-shadow: 0 10px 24px -12px rgba(195, 151, 56, 0.7), var(--shadow-inset);
+}
+
+.btn-gold:hover {
+  background: linear-gradient(180deg, #e2b556, var(--gold-bright));
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px -12px rgba(195, 151, 56, 0.72), var(--shadow-inset);
+}
+
+/* Sheen sweep on gold buttons */
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.45) 47%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.btn-gold:hover::after {
+  transform: translateX(120%);
+}
+
+.btn-line {
+  background: transparent;
+  border-color: #c3bca6;
+  color: var(--ink);
+}
+
+.btn-line:hover {
+  border-color: var(--ink);
+  background: rgba(19, 34, 25, 0.03);
+  transform: translateY(-1px);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(19, 34, 25, 0.08);
+}
+
+/* Chips --------------------------------------------------------------------- */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  gap: 8px;
+  min-height: 42px;
+  padding: 9px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease,
+    box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.chip:hover {
+  border-color: var(--pine);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.chip.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--husk);
+  box-shadow: var(--shadow-sm);
+}
+
+.chip-count {
+  font-size: 0.68rem;
+  color: var(--gold-deep);
+}
+
+.chip.is-active .chip-count {
+  color: var(--gold-soft);
+}
+
+/* Hairline gold rule — recurring "trade document" divider */
+.rule-gold {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--gold-line) 20%, var(--gold-line) 80%, transparent);
+}
+
+/* Reveal on scroll ----------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Accessibility helpers ------------------------------------------------------ */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 16px;
+  z-index: 200;
+  padding: 12px 18px;
+  background: var(--ink);
+  color: var(--husk);
+  border-radius: 0 0 10px 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-150%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

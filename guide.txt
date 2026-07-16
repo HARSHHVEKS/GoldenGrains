@@ -1,0 +1,285 @@
+========================================================================
+  GOLDEN GRAINS WEBSITE — A PLAIN-ENGLISH GUIDE FOR THE OWNER
+. Follow it line by line.
+========================================================================
+
+Hi! This guide shows you two things:
+
+  A. How to OPEN and RUN your website on your own computer.
+  B. How to EDIT the parts you'll actually want to change
+     (prices, product names, phone number, text, photos).
+
+You do NOT need to know how to code. You just need to copy short
+commands and change a few words inside files. Take your time. You
+cannot "break the internet" — everything here happens on your own
+computer until you decide to publish.
+
+Whenever you see a box like this:
+
+    npm run dev
+
+...that is a "command". You type it (or paste it) into a black window
+called the Terminal, then press Enter. That's it.
+
+
+========================================================================
+  PART 1 — ONE-TIME SETUP (do this only once)
+========================================================================
+
+Your website is built with a tool called "Node". You install it once.
+
+STEP 1. Install Node.js
+------------------------
+  1. Open your web browser and go to:  https://nodejs.org
+  2. Click the big green button that says "LTS" (the recommended one).
+  3. Open the file it downloads and click Next / Continue / Agree
+     until it finishes, just like installing any normal program.
+
+That's the only thing you have to install.
+
+
+STEP 2. Open the Terminal (the command window)
+----------------------------------------------
+  • On Linux (your computer):
+      Press the Ctrl, Alt and T keys together.
+      OR search your apps for "Terminal" and open it.
+
+  • On Windows:
+      Click Start, type "PowerShell", press Enter.
+
+  • On Mac:
+      Press Cmd + Space, type "Terminal", press Enter.
+
+A window opens where you can type commands. Keep it open.
+
+
+STEP 3. Go into your website folder
+-----------------------------------
+Your website lives in the folder named "GoldenGrains-main".
+In the Terminal, type this and press Enter (change the path if you
+moved the folder somewhere else):
+
+    cd ~/Downloads/GoldenGrains-main
+
+Tip: you can also type "cd " (with a space), then DRAG the website
+folder from your file browser onto the Terminal window, then press
+Enter. It fills in the path for you.
+
+
+STEP 4. Install the website's building blocks
+---------------------------------------------
+Type this once and press Enter:
+
+    npm install
+
+It will think for a minute and print a lot of text. That's normal.
+Wait until it stops and you can type again. You only do this once.
+
+
+========================================================================
+  PART 2 — RUN THE WEBSITE (do this every time you want to work)
+========================================================================
+
+STEP 1. In the Terminal (still inside the GoldenGrains-main folder),
+        type:
+
+    npm run dev
+
+STEP 2. It will show a line like:
+
+        ➜  Local:   http://localhost:5173/
+
+STEP 3. Hold Ctrl and click that http://localhost... link, OR copy it
+        into your web browser's address bar and press Enter.
+
+Your website opens in the browser.
+
+THE MAGIC PART: keep this browser tab open next to your editor. Every
+time you SAVE a change to a file (Part 3), the website updates by
+itself within a second. No refresh needed.
+
+TO STOP the website: click the Terminal window and press Ctrl + C.
+(You can always start it again with "npm run dev".)
+
+
+========================================================================
+  PART 3 — EDIT YOUR WEBSITE (the important part)
+========================================================================
+
+Almost EVERYTHING you'll want to change — product names, prices,
+phone number, address, the questions & answers, the team, the reviews
+— lives in ONE single file:
+
+    src/data/siteContent.js
+
+HOW TO OPEN IT:
+  • Download the free editor "VS Code" from https://code.visualstudio.com
+    (install it like any program).
+  • Open VS Code → File → Open Folder → choose "GoldenGrains-main".
+  • On the left you'll see the files. Click into the folders:
+        src  →  data  →  siteContent.js
+  • Now you can read and edit it like a Word document.
+
+GOLDEN RULE FOR EDITING:
+  Only change the words INSIDE the 'single quotes' or "double quotes".
+  Do NOT delete the quotes, commas, or the { } brackets around them.
+  When you're done, press Ctrl + S (Cmd + S on Mac) to SAVE.
+  Look at your browser — the change is already there.
+
+If something looks broken after an edit, you probably deleted a quote
+or a comma. Just undo with Ctrl + Z until it works again.
+
+------------------------------------------------------------------------
+  COMMON THINGS YOU'LL WANT TO CHANGE
+------------------------------------------------------------------------
+
+>>> CHANGE THE PHONE NUMBER, EMAIL, OR ADDRESS
+Find the section that starts with:  export const contact = {
+Change the text inside the quotes, for example:
+
+    phoneDisplay: '+254 789 910 033',      <- the number people SEE
+    phoneHref: 'tel:+254789910033',        <- must be the SAME number,
+                                               no spaces, starts with tel:
+    email: 'info@goldengrains.net',
+    address: 'Narayan Millers Ltd., Mlolongo Road, Machakos, Kenya',
+
+IMPORTANT: the WhatsApp button uses the number in this line near the
+top of the file:
+
+    return `https://wa.me/254789910033?text=...`
+
+Change 254789910033 to your full WhatsApp number (country code first,
+NO plus sign, NO spaces).
+
+
+>>> CHANGE A PRODUCT PRICE OR NAME
+Find:  export const products = [
+Each product is one line that looks like this:
+
+    { id: 'GG-01', name: 'Black Beans', desc: 'Premium black beans',
+      category: 'Beans', price: 200, image: '/products/black-beans.png', ... },
+
+  • To change the PRICE: change the number after  price:
+        price: 200   ->   price: 240
+    (a plain number, no quotes, no "KSh")
+  • To change the NAME: change the words after  name:  (keep the quotes)
+  • To change the short description: change the words after  desc:
+
+
+>>> ADD A BRAND-NEW PRODUCT
+1. Put its photo in the folder:  public/products/
+   (a square PNG image works best — see the photo tips below).
+2. In products = [ ... ], copy an existing line, paste it as a new
+   line, and change the details. Give it the next id number and point
+   "image" to your new photo. Example:
+
+    { id: 'GG-19', name: 'Soya Beans', desc: 'Clean soya beans',
+      category: 'Beans', price: 260, image: '/products/soya-beans.png', aliases: ['soya'] },
+
+   Make sure every line ends with a comma.
+
+
+>>> CHANGE A PRODUCT PHOTO
+1. Save your new picture into:  public/products/
+2. Best results: a SQUARE image (same width and height), PNG or JPG.
+3. In the product's line, set  image: '/products/your-file-name.png'
+   (the name must match your file EXACTLY, including .png or .jpg).
+
+
+>>> CHANGE THE FREQUENTLY ASKED QUESTIONS
+Find:  export const faq = [
+Each item has a  q:  (the question) and an  a:  (the answer).
+Edit the words inside the quotes.
+
+
+>>> CHANGE THE TEAM MEMBERS
+Find:  export const team = [
+Edit the name, role, initials (2 letters), and blurb for each person.
+
+
+>>> CHANGE THE CUSTOMER REVIEWS
+Find:  export const testimonials = [
+Edit the quote, name, and role for each review.
+
+
+>>> CHANGE THE BIG HEADLINE / INTRO TEXT ON THE HOME PAGE
+That headline lives in a different file:
+    src/components/Hero.jsx
+Open it and look for the sentence beginning "Export-grade..." inside
+the <h1> ... </h1>. Change ONLY the visible words. Save.
+
+The "About the mill" paragraphs are back in siteContent.js under:
+    export const company = {   ->   about: [ '...', '...' ]
+
+
+========================================================================
+  PART 4 — PUBLISH IT ONLINE (when you're happy)
+========================================================================
+
+While you edit, the site only runs on your computer. To put it on the
+real internet:
+
+OPTION A — The easy, free way (recommended):
+  1. Go to  https://www.netlify.com  and make a free account.
+  2. Click "Add new site" -> "Deploy manually".
+  3. First, in your Terminal (inside the folder), run:
+
+        npm run build
+
+     This creates a new folder called "dist".
+  4. Drag that "dist" folder onto the Netlify upload area.
+  5. Netlify gives you a live web address. Done — you're online.
+
+  To update the live site later: run "npm run build" again and drag
+  the new "dist" folder in again (or connect your folder to GitHub so
+  it updates automatically — ask a techy friend to help with that
+  once, then it's automatic forever).
+
+OPTION B: Any web host works. Run "npm run build", then upload
+everything INSIDE the "dist" folder to your hosting.
+
+
+========================================================================
+  QUICK CHEAT SHEET
+========================================================================
+
+  Open terminal in the folder ......  cd ~/Downloads/GoldenGrains-main
+  Install (one time) ...............  npm install
+  Run the site locally .............  npm run dev
+  Stop the site ....................  Ctrl + C
+  Build for publishing .............  npm run build
+
+  Edit prices / text / contact .....  src/data/siteContent.js
+  Product photos ...................  public/products/
+  Big home headline ................  src/components/Hero.jsx
+
+  After editing: press Ctrl + S to save, then look at the browser.
+
+
+========================================================================
+  IF SOMETHING GOES WRONG
+========================================================================
+
+• The page went blank or shows an error after I edited a file.
+    -> You likely removed a quote ' , a comma , or a bracket } .
+       Press Ctrl + Z in the editor to undo until it works, then save.
+
+• "npm: command not found"
+    -> Node.js isn't installed yet. Redo Part 1, Step 1, then close and
+       reopen the Terminal.
+
+• The http://localhost link won't open.
+    -> Make sure "npm run dev" is still running in the Terminal (it
+       should NOT have given you back the typing prompt). If it stopped,
+       run "npm run dev" again.
+
+• I'm stuck.
+    -> Close the Terminal, open a new one, run these three lines:
+          cd ~/Downloads/GoldenGrains-main
+          npm install
+          npm run dev
+       That resets things without losing your work.
+
+You've got this. Change one small thing, save, watch the browser. Once
+you've done it once, the rest is easy.
+========================================================================
